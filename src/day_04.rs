@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap, HashSet};
 use std::mem::replace;
 
 use crate::utils;
@@ -80,22 +80,23 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             .collect();
         bingo_boards.push(BingoBoard::new(result));
     }
-    for num in numbers {
-        let mut finished_board_score: Vec<i32> = vec![];
-        for board in bingo_boards.iter_mut() {
+    let mut finished_board_score: Vec<i32> = vec![];
+    let mut board_set: BTreeSet<i32> = BTreeSet::new();
+    let number_of_boards = bingo_boards.len();
+    'outer: for num in numbers {
+        for (index, board) in bingo_boards.iter_mut().enumerate() {
             board.mark_complete(num);
             if board.is_complete() {
                 let sum = board.get_sum();
-                finished_board_score.push(sum);
-                break;
+                board_set.insert(index as i32);
+                // println!("score {} num is {} index is {}", sum * num, num, index);
+                if board_set.len() == number_of_boards {
+                    println!("score {} num is {} index is {}", sum * num, num, index);
+                    break 'outer;
+                }
+                finished_board_score.push(num * sum);
             }
         }
-        if finished_board_score.len() > 0 {
-            let score = *finished_board_score.get(0).unwrap();
-            println!("Board finished: {}", score * num);
-            break;
-        }
     }
-
     Ok(())
 }
