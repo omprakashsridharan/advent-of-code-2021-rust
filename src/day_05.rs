@@ -62,7 +62,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         } else {
             let slope = (y2 - y1) / (x2 - x1);
             if slope == 1 {
-                println!("slope 1 {:?} {:?}", pair1, pair2);
                 if x1 < x2 && y1 < y2 {
                     let mut tx = x1;
                     let mut ty = y1;
@@ -81,7 +80,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
                     let mut tx = x2;
                     let mut ty = y2;
                     while tx <= x1 && ty <= y1 {
-                        println!("tx {} ty {}", tx, ty);
                         let key: String = String::from(format!("{}#{}", tx, ty));
                         if map.contains_key(&key) {
                             *map.get_mut(&key).unwrap() += 1;
@@ -98,7 +96,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
                     let mut tx = x1;
                     let mut ty = y1;
                     while tx <= x2 && ty >= y2 {
-                        println!("tx {} ty {}", tx, ty);
                         let key: String = String::from(format!("{}#{}", tx, ty));
                         if map.contains_key(&key) {
                             *map.get_mut(&key).unwrap() += 1;
@@ -112,7 +109,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
                     let mut tx = x1;
                     let mut ty = y1;
                     while tx >= x2 && ty <= y2 {
-                        println!("tx {} ty {}", tx, ty);
                         let key: String = String::from(format!("{}#{}", tx, ty));
                         if map.contains_key(&key) {
                             *map.get_mut(&key).unwrap() += 1;
